@@ -1,6 +1,8 @@
 # Stock Management REST API
 
-A RESTful Stock Management API built using PHP Yii2 Framework and MySQL.
+A RESTful Stock Management API built using **PHP Yii2 Framework** and **MySQL** for managing categories and stock items. The API supports complete CRUD operations along with stock-in, stock-out, low-stock checking, searching, and filtering.
+
+---
 
 ## Features
 
@@ -13,6 +15,10 @@ A RESTful Stock Management API built using PHP Yii2 Framework and MySQL.
 - Filter Stock Items by Category
 - Database Migrations
 - Seed Data
+- Input Validation
+- RESTful JSON Responses
+
+---
 
 ## Technology Stack
 
@@ -22,51 +28,85 @@ A RESTful Stock Management API built using PHP Yii2 Framework and MySQL.
 - Composer
 - REST API
 
+---
+
+## Project Structure
+
+```
+stock-api/
+│── assets/
+│── commands/
+│── config/
+│── controllers/
+│── docs/
+│   └── er-diagram.png
+│── migrations/
+│── models/
+│── runtime/
+│── tests/
+│── vendor/
+│── views/
+│── web/
+│── README.md
+│── composer.json
+│── yii
+```
+
+---
+
+## ER Diagram
+
+![ER Diagram](docs/er-diagram.png)
+
+---
+
 ## Installation
 
-Clone the repository:
+### Clone the repository
 
 ```bash
 git clone https://github.com/jatinpaulsingh123456-crypto/natobotics-stock-management-api.git
 ```
 
-Go to the project folder:
+### Navigate to the project
 
 ```bash
 cd natobotics-stock-management-api
 ```
 
-Install dependencies:
+### Install dependencies
 
 ```bash
 composer install
 ```
 
-Configure the database in:
+### Configure database
+
+Update your database credentials in:
 
 ```
 config/db.php
 ```
 
-Run migrations:
+### Run migrations
 
 ```bash
 php yii migrate
 ```
 
-Seed the database:
+### Seed the database
 
 ```bash
 php yii seed
 ```
 
-Start the development server:
+### Start the development server
 
 ```bash
 php yii serve
 ```
 
-Server runs at:
+Server will run at:
 
 ```
 http://localhost:8080
@@ -74,9 +114,9 @@ http://localhost:8080
 
 ---
 
-## API Endpoints
+# API Endpoints
 
-### Categories
+## Categories
 
 | Method | Endpoint |
 |---------|----------|
@@ -86,7 +126,9 @@ http://localhost:8080
 | PUT | /categories/{id} |
 | DELETE | /categories/{id} |
 
-### Stock Items
+---
+
+## Stock Items
 
 | Method | Endpoint |
 |---------|----------|
@@ -96,47 +138,94 @@ http://localhost:8080
 | PUT | /stock-items/{id} |
 | DELETE | /stock-items/{id} |
 
-### Custom APIs
+---
 
-| Method | Endpoint |
-|---------|----------|
-| POST | /stock-items/{id}/stock-in |
-| POST | /stock-items/{id}/stock-out |
-| GET | /stock-items/low-stock |
+## Custom Endpoints
 
-### Search
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | /stock-items/{id}/stock-in | Increase stock quantity |
+| POST | /stock-items/{id}/stock-out | Decrease stock quantity |
+| GET | /stock-items/low-stock | Returns items below reorder level |
 
-```
+---
+
+## Search Stock Items
+
+Example:
+
+```http
 GET /stock-items?search=Arduino
 ```
 
-### Filter
+---
 
-```
+## Filter Stock Items by Category
+
+Example:
+
+```http
 GET /stock-items?category=4
 ```
 
 ---
 
-## Validation
+# Validation
+
+The API validates the following:
 
 - Quantity must be greater than zero.
 - Stock cannot become negative.
-- Item must exist before stock operations.
+- Stock-out quantity cannot exceed available stock.
 - Category must exist before assigning stock items.
+- Item must exist before performing stock operations.
 
 ---
 
-## Notes & Trade-offs
+# Sample Response
+
+```json
+{
+    "success": true,
+    "message": "Stock added successfully.",
+    "data": {
+        "id": 1,
+        "name": "Arduino Uno",
+        "sku": "SKU001",
+        "quantity": 110
+    }
+}
+```
+
+---
+
+# Notes & Trade-offs
 
 - Built using Yii2 REST ActiveController.
-- Uses MySQL as the database.
-- Custom endpoints implemented for stock-in, stock-out, and low-stock operations.
+- Uses MySQL for persistent storage.
+- Custom REST endpoints implemented for stock-in, stock-out, and low-stock operations.
+- Database migrations included for schema creation.
+- Seed data included for quick testing.
 - Validation added to prevent invalid stock updates.
-- Seed data included for testing.
+- Search and category filtering implemented using query parameters.
 
 ---
 
-## Author
+# Testing
 
-Jatin Paul Singh
+The API has been tested using **Postman** for:
+
+- Category CRUD
+- Stock Item CRUD
+- Stock In
+- Stock Out
+- Low Stock
+- Search
+- Category Filter
+- Validation and Error Handling
+
+---
+
+# Author
+
+**Jatin Paul Singh**
