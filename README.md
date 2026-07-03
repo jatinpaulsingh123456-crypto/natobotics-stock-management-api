@@ -210,7 +210,9 @@ Returns stock items belonging to a specific category.
 
 The API validates the following:
 
-- Quantity must be greater than zero.
+- SKU must be unique.
+- Quantity must be greater than or equal to zero.
+- Unit price must be greater than or equal to zero.
 - Stock cannot become negative.
 - Stock-out quantity cannot exceed available stock.
 - Category must exist before assigning stock items.
@@ -267,28 +269,29 @@ The following APIs have been tested:
 - Stock In
 - Stock Out
 - Low Stock
-- Search
+- Search by Name/SKU
 - Filter by Category
 
 ### Validation
 
+- Duplicate SKU
 - Invalid Category ID
 - Invalid Stock Item ID
-- Negative Stock Prevention
-- Required Field Validation
+- Stock-out greater than available quantity
+- Negative quantity validation
+- Required field validation
 
 ---
 
 # Notes & Trade-offs
 
-- Built using Yii2 REST `ActiveController`.
-- Uses MySQL for persistent storage.
-- Database schema managed using Yii2 Migrations.
-- Seed data included for quick setup.
-- Custom REST endpoints implemented for stock-in, stock-out, and low-stock operations.
-- Search and category filtering implemented using query parameters.
-- Validation added to prevent invalid stock updates.
-- API responses returned in JSON format.
+This project was developed as a focused backend implementation within the 24-hour assessment window. The primary goal was to deliver all required REST API functionality while following Yii2 framework conventions.
+
+The implementation includes CRUD operations for Categories and Stock Items, stock-in and stock-out operations, low-stock checking, search and category filtering, database migrations, seed data, input validation, an ER diagram, and a Postman collection for API testing.
+
+To keep the scope manageable, several production-level features were intentionally left out. Authentication and authorization, pagination, sorting, automated unit/integration tests, caching, and audit logging were not implemented because they were outside the core requirements and time constraints.
+
+With additional development time, I would enhance the project by adding JWT authentication, Swagger/OpenAPI documentation, automated API tests, pagination, sorting, transaction logging, Docker support, and CI/CD integration to improve scalability, maintainability, and deployment readiness.
 
 ---
 
@@ -297,9 +300,12 @@ The following APIs have been tested:
 - JWT Authentication
 - Pagination
 - Sorting
-- Swagger/OpenAPI Documentation
-- Unit Tests
+- Swagger / OpenAPI Documentation
+- Automated Unit & Integration Tests
 - Docker Support
+- CI/CD Pipeline
+- Audit Logging
+- Role-Based Access Control (RBAC)
 
 ---
 
